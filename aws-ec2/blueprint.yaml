@@ -1,0 +1,45 @@
+inputs:
+  - pulumi_login_url:
+      description: Pulumi login URL
+      type: string
+  - pulumi_stack_name:
+      description: Pulumi stack name
+      type: string
+  - pulumi_access_token:
+      description: Pulumi access token
+      type: string
+  - aws_role_arn:
+      description: AWS role ARN
+      type: string
+stack:
+  name: Pulumi EC2 Python scenario $${{ context.random_string }}
+  space: ${{ context.blueprint.space }}
+  auto_deploy: false
+  vcs:
+    branch: main
+    repository: spacelift-pulumi-example
+    project_root: aws-ec2
+    provider: GITHUB
+  vendor:
+    pulumi:
+      stack_name: ${{ context.inputs.pulumi_stack_name }}
+      login_url: ${{ context.inputs.pulumi_login_url }}
+  environment:
+    variables:
+      - name: TF_VAR_suffix
+        value: $${{ context.random_string }}
+      - name: PULUMI_ACCESS_TOKEN
+        value: $${{ inputs.pulumi_access_token }}
+  attachments:
+    clouds:
+      aws:
+        id: ${spacelift_aws_integration.this.id}
+        read: true
+        write: true
+  options:
+    trigger_run: true
+  hooks:
+    apply:
+      before: [ "ls" ]
+    init:
+      before: [ "ls" ]

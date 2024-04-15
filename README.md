@@ -32,8 +32,9 @@ Create an AWS integration with EC2 permissions.
 Manual action:
 Create Pulumi Stack in spacelift.
 Fill out the login url (https://api.pulumi.com if you're using pulumi.com)
-and the stack name.
+and the stack name (in my case ec2-test) - https://app.pulumi.com/KNiepok/aws_ec2/ec2-test.
 You'll also have to provide pre-init and pre-apply scripts, but for this scenario it's ok to put anything in there, so I put `ls`.
+Also, be sure to scope the project root to aws-ec2/pulumi.
 Connect the stack to the context.
 Connect the cloud integration to the stack.
 (todo automate)
