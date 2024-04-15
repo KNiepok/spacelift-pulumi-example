@@ -7,3 +7,4 @@ terraform {
 }
 
 provider "spacelift" {}
+variable "aws_role_arn" {}
